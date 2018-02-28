@@ -52,6 +52,11 @@ import com.pubhealth.entity.ES.RangeField;
 
 import static java.lang.String.format;
 
+/**
+ * wrapper elastic search Api
+ * @author chey
+ *
+ */
 public class ESQueryWrapper {
 	private Index index;
 	private final RestHighLevelClient client;
