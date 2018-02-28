@@ -25,6 +25,7 @@ public class HealthDocController {
 	@RequestMapping("/search")
 	@ResponseBody
 	public String searchHealthDoc(HttpServletRequest request,HttpServletResponse response){
+		
 		String result=healthDocService.searchHealthDoc();
 		return result;
 	}
