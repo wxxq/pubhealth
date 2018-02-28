@@ -6,6 +6,12 @@ public class Index {
 	private int from;
 	private int size;
 	private int timeout;
+	
+	public Index(String name,String type){
+		this.name=name;
+		this.type=type;
+	}
+
 
 	public String getName() {
 		return name;

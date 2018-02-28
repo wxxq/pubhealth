@@ -76,5 +76,6 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/snakeyaml-1.15.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spatial4j-0.6.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/t-digest-3.0.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/json-20150729.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
