@@ -26,7 +26,6 @@ import com.google.gson.Gson;
 import com.pubhealth.entity.Document;
 import com.pubhealth.entity.Index;
 
-@Component
 public class ElasticDao {
 	private static Logger log = Logger.getLogger(ElasticDao.class);
 	private final RestHighLevelClient client;

@@ -176,57 +176,6 @@ public class ESQueryWrapper {
 		return searchResponse;
 	}
 
-	public void aggretationQuery1() {
-		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
-		TermsAggregationBuilder aggregation = AggregationBuilders.terms("count_age").field("category");
-		SumAggregationBuilder sumAggregation = AggregationBuilders.sum("age_sum").field("age");
-		MinAggregationBuilder minAggregation = AggregationBuilders.min("age_min").field("age");
-		AvgAggregationBuilder avgAggregation = AggregationBuilders.avg("age_avg").field("age");
-		MaxAggregationBuilder maxAggregation = AggregationBuilders.max("age_max").field("age");
-		aggregation.subAggregation(sumAggregation);
-		aggregation.subAggregation(avgAggregation);
-		aggregation.subAggregation(maxAggregation);
-		aggregation.subAggregation(minAggregation);
-		searchSourceBuilder.aggregation(aggregation);
-		SearchResponse searchResponse = search(searchSourceBuilder);
-		Aggregations aggregations = searchResponse.getAggregations();
-		Terms terms = aggregations.get("count_age");
-		List<? extends Bucket> buckets = terms.getBuckets();
-		for (Bucket bucket : buckets) {
-			Sum sum = bucket.getAggregations().get("age_sum");
-			Avg avg = bucket.getAggregations().get("age_avg");
-			double sum_value = sum.getValue();
-			double avg_value = avg.getValue();
-			String item_result = format("%s:%d,%f,%f", bucket.getKey(), bucket.getDocCount(), sum_value, avg_value);
-			System.out.println(item_result);
-		}
-	}
-
-	public void aggretationQuery() {
-		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
-		TermsAggregationBuilder classAggregation = AggregationBuilders.terms("term_class").field("category");
-		TermsAggregationBuilder ageAggregation = AggregationBuilders.terms("term_age").field("age");
-		AvgAggregationBuilder avgHeightAggregation = AggregationBuilders.avg("avg_height").field("height");
-		classAggregation.subAggregation(ageAggregation);
-		ageAggregation.subAggregation(avgHeightAggregation);
-		searchSourceBuilder.aggregation(classAggregation);
-		SearchResponse searchResponse = search(searchSourceBuilder);
-		Aggregations aggregations = searchResponse.getAggregations();
-		Terms terms = aggregations.get("term_class");
-		List<? extends Bucket> buckets = terms.getBuckets();
-		for (Bucket bucket : buckets) {
-			Terms ages = bucket.getAggregations().get("term_age");
-			List<? extends Bucket> ageBuckets = ages.getBuckets();
-			for (Bucket ageBucket : ageBuckets) {
-				Avg avgHeight = ageBucket.getAggregations().get("avg_height");
-				String item_result = format("%s-%s:%d,%f", bucket.getKey(), ageBucket.getKey(), ageBucket.getDocCount(),
-						avgHeight.getValue());
-				System.out.println(item_result);
-			}
-
-		}
-	}
-
 	// 添加聚合条件
 	public void addAggregationQuery(SearchSourceBuilder searchSourceBuilder, ESParam param) {
 		if (param.aggregationFields != null) {

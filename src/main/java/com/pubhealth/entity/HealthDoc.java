@@ -4,7 +4,7 @@ package com.pubhealth.entity;
  * @author chey
  *
  */
-public class HealthDoc {
+public class HealthDoc extends Page {
 	private String personalName;
 	private String idCard;
 	private int provinceId;

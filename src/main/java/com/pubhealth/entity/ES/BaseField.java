@@ -1,5 +1,10 @@
 package com.pubhealth.entity.ES;
 
+/**
+ * ES 查询条件封装基类
+ * @author chey
+ *
+ */
 public class BaseField {
 	
 	protected String fieldName;

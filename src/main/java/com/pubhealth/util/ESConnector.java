@@ -25,8 +25,4 @@ public class ESConnector {
 	}
 	
 	
-	
-	public static void main(String[] args){
-		
-	}
 }
