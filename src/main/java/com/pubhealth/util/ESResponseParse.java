@@ -11,14 +11,15 @@ public class ESResponseParse {
 		SearchHits hits = response.getHits();
 		long totalSize = hits.totalHits;
 		JSONObject obj = new JSONObject();
-		obj.put("totalSize", totalSize);
+		obj.put("count", totalSize);
 		JSONArray arr = new JSONArray();
 		for (SearchHit hit : hits) {
 			String resultStr=hit.getSourceAsString();
 			JSONObject item = new JSONObject(resultStr);
 			arr.put(item);
 		}
-		obj.put("documents", arr);
+		obj.put("result", arr);
+		obj.put("status", 1);
 		return obj.toString();
 	}
 }

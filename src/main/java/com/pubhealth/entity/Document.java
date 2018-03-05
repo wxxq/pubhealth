@@ -1,34 +1,20 @@
 package com.pubhealth.entity;
 
+import java.util.Date;
+
 public class Document {
 	private String id;
-	private String firstname;
-	private String lastname;
+	private String firstName;
+	private String lastName;
 	private String message;
 	private int age;
 	private int height;
-	private int province_id;
-	private int city_id;
+	private int provinceId;
+	private int cityId;
 	private double money;
-
+	private Date date;
 	private String category;
 	private String school;
-
-	public String getFirstname() {
-		return firstname;
-	}
-
-	public void setFirstname(String firstname) {
-		this.firstname = firstname;
-	}
-
-	public String getLastname() {
-		return lastname;
-	}
-
-	public void setLastname(String lastname) {
-		this.lastname = lastname;
-	}
 
 	public String getMessage() {
 		return message;
@@ -86,20 +72,45 @@ public class Document {
 		this.money = money;
 	}
 
-	public int getProvince_id() {
-		return province_id;
+	public int getProvinceId() {
+		return provinceId;
 	}
 
-	public void setProvince_id(int province_id) {
-		this.province_id = province_id;
+	public void setProvinceId(int provinceId) {
+		this.provinceId = provinceId;
 	}
 
-	public int getCity_id() {
-		return city_id;
+	public int getCityId() {
+		return cityId;
 	}
 
-	public void setCity_id(int city_id) {
-		this.city_id = city_id;
+	public void setCityId(int cityId) {
+		this.cityId = cityId;
 	}
+
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
 
 }

@@ -10,10 +10,14 @@ import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.MatchQueryBuilder;
+import org.elasticsearch.index.query.MultiMatchQueryBuilder;
+import org.elasticsearch.index.query.PrefixQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.index.query.RangeQueryBuilder;
+import org.elasticsearch.index.query.RegexpQueryBuilder;
 import org.elasticsearch.index.query.TermQueryBuilder;
+import org.elasticsearch.index.query.WildcardQueryBuilder;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
 import org.elasticsearch.search.aggregations.Aggregation;
@@ -48,15 +52,12 @@ import com.pubhealth.entity.ES.ESMetrics;
 import com.pubhealth.entity.ES.ESParam;
 import com.pubhealth.entity.ES.TermField;
 import com.pubhealth.entity.ES.MatchField;
+import com.pubhealth.entity.ES.MutilMatchField;
+import com.pubhealth.entity.ES.PartField;
 import com.pubhealth.entity.ES.RangeField;
 
 import static java.lang.String.format;
 
-/**
- * wrapper elastic search Api
- * @author chey
- *
- */
 public class ESQueryWrapper {
 	private Index index;
 	private final RestHighLevelClient client;
@@ -109,20 +110,32 @@ public class ESQueryWrapper {
 		BoolQueryBuilder boolQuery = QueryBuilders.boolQuery();
 		for (BaseField eskv : fieldList) {
 			QueryBuilder tempQueryBuilder = null;
+			String key = eskv.getFieldName() ;
 			switch (eskv.flag) {
 			case TERM:
-				tempQueryBuilder = QueryBuilders.termQuery(eskv.getFieldName(), ((TermField) eskv).getFieldValue());
+				tempQueryBuilder = QueryBuilders.termQuery(key, ((TermField) eskv).getFieldValue());
 				break;
 			case TERMS:
-				tempQueryBuilder = QueryBuilders.termsQuery(eskv.getFieldName(),
+				tempQueryBuilder = QueryBuilders.termsQuery(key,
 						((CollectionField) eskv).getFieldCollection());
 				break;
+			case MUITL_MATCH:
+				MutilMatchField mutilField = (MutilMatchField)eskv;
+				MultiMatchQueryBuilder multiMatchQueryBuilder = QueryBuilders.multiMatchQuery(mutilField.getFieldValue(),mutilField.getMutilFields());
+				multiMatchQueryBuilder.operator(mutilField.getOperator());
+				multiMatchQueryBuilder.minimumShouldMatch(mutilField.getMinimum_should_match());
+				multiMatchQueryBuilder.boost(mutilField.getBoost());
+				multiMatchQueryBuilder.type(mutilField.getType());
+				tempQueryBuilder = multiMatchQueryBuilder;
+				break;
+			case FUZZY:
+				break;
 			case EXIST:
-				tempQueryBuilder = QueryBuilders.existsQuery(eskv.getFieldName());
+				tempQueryBuilder = QueryBuilders.existsQuery(key);
 				break;
 			case MATCH:
 				MatchField matchField = (MatchField) eskv;
-				MatchQueryBuilder matchQueryBuilder = QueryBuilders.matchQuery(eskv.getFieldName(),
+				MatchQueryBuilder matchQueryBuilder = QueryBuilders.matchQuery(key,
 						matchField.getFieldValue());
 				matchQueryBuilder.operator(matchField.getOperator());
 				matchQueryBuilder.minimumShouldMatch(matchField.getMinimum_should_match());
@@ -130,9 +143,24 @@ public class ESQueryWrapper {
 				matchQueryBuilder.type(matchField.getType());
 				tempQueryBuilder = matchQueryBuilder;
 				break;
+			case WILDCARD:
+				PartField wildPartField = (PartField) eskv;
+				WildcardQueryBuilder wildQueryBuilder = QueryBuilders.wildcardQuery(key,wildPartField.getValue());
+				tempQueryBuilder = wildQueryBuilder;
+				break;
+			case PREFIX:
+				PartField prefixPartField = (PartField) eskv;
+				PrefixQueryBuilder prefixQueryBuilder = QueryBuilders.prefixQuery(key, prefixPartField.getValue());
+				tempQueryBuilder = prefixQueryBuilder;
+				break;
+			case REGEXP:
+				PartField regexpPartField = (PartField) eskv;
+				RegexpQueryBuilder regexpQueryBuilder = QueryBuilders.regexpQuery(key, regexpPartField.getValue());
+				tempQueryBuilder = regexpQueryBuilder;
+				break;
 			case RANGE:
 				RangeField rangeField = (RangeField) eskv;
-				RangeQueryBuilder rangeQueryBuilder = QueryBuilders.rangeQuery(eskv.getFieldName());
+				RangeQueryBuilder rangeQueryBuilder = QueryBuilders.rangeQuery(key);
 				rangeQueryBuilder.from(rangeField.getLowerValue(), rangeField.isIncludeLower());
 				rangeQueryBuilder.to(rangeField.getUpperValue(), rangeField.isIncludeUpper());
 				tempQueryBuilder = rangeQueryBuilder;
@@ -174,6 +202,57 @@ public class ESQueryWrapper {
 			e.printStackTrace();
 		}
 		return searchResponse;
+	}
+
+	public void aggretationQuery1() {
+		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+		TermsAggregationBuilder aggregation = AggregationBuilders.terms("count_age").field("category");
+		SumAggregationBuilder sumAggregation = AggregationBuilders.sum("age_sum").field("age");
+		MinAggregationBuilder minAggregation = AggregationBuilders.min("age_min").field("age");
+		AvgAggregationBuilder avgAggregation = AggregationBuilders.avg("age_avg").field("age");
+		MaxAggregationBuilder maxAggregation = AggregationBuilders.max("age_max").field("age");
+		aggregation.subAggregation(sumAggregation);
+		aggregation.subAggregation(avgAggregation);
+		aggregation.subAggregation(maxAggregation);
+		aggregation.subAggregation(minAggregation);
+		searchSourceBuilder.aggregation(aggregation);
+		SearchResponse searchResponse = search(searchSourceBuilder);
+		Aggregations aggregations = searchResponse.getAggregations();
+		Terms terms = aggregations.get("count_age");
+		List<? extends Bucket> buckets = terms.getBuckets();
+		for (Bucket bucket : buckets) {
+			Sum sum = bucket.getAggregations().get("age_sum");
+			Avg avg = bucket.getAggregations().get("age_avg");
+			double sum_value = sum.getValue();
+			double avg_value = avg.getValue();
+			String item_result = format("%s:%d,%f,%f", bucket.getKey(), bucket.getDocCount(), sum_value, avg_value);
+			System.out.println(item_result);
+		}
+	}
+
+	public void aggretationQuery() {
+		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+		TermsAggregationBuilder classAggregation = AggregationBuilders.terms("term_class").field("category");
+		TermsAggregationBuilder ageAggregation = AggregationBuilders.terms("term_age").field("age");
+		AvgAggregationBuilder avgHeightAggregation = AggregationBuilders.avg("avg_height").field("height");
+		classAggregation.subAggregation(ageAggregation);
+		ageAggregation.subAggregation(avgHeightAggregation);
+		searchSourceBuilder.aggregation(classAggregation);
+		SearchResponse searchResponse = search(searchSourceBuilder);
+		Aggregations aggregations = searchResponse.getAggregations();
+		Terms terms = aggregations.get("term_class");
+		List<? extends Bucket> buckets = terms.getBuckets();
+		for (Bucket bucket : buckets) {
+			Terms ages = bucket.getAggregations().get("term_age");
+			List<? extends Bucket> ageBuckets = ages.getBuckets();
+			for (Bucket ageBucket : ageBuckets) {
+				Avg avgHeight = ageBucket.getAggregations().get("avg_height");
+				String item_result = format("%s-%s:%d,%f", bucket.getKey(), ageBucket.getKey(), ageBucket.getDocCount(),
+						avgHeight.getValue());
+				System.out.println(item_result);
+			}
+
+		}
 	}
 
 	// 添加聚合条件

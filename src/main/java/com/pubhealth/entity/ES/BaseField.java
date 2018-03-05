@@ -1,13 +1,14 @@
 package com.pubhealth.entity.ES;
-
 /**
- * ES 查询条件封装基类
+ * 
  * @author chey
  *
  */
 public class BaseField {
 	
 	protected String fieldName;
+	
+	private Object fieldValue;
 
 	public ESQueryType flag ;
 	
@@ -20,6 +21,19 @@ public class BaseField {
 	public BaseField(String fieldName,ESQueryType flag){
 		this.fieldName = fieldName;
 		this.flag = flag;
+	}
+	
+	public BaseField(String fieldName,Object fieldValue,ESQueryType flag){
+		this.fieldName = fieldName;
+		this.flag = flag;
+		this.fieldValue = fieldValue;
+	}
+	
+	public BaseField(String fieldName,Object fieldValue,ESQueryType flag,ESSearchType searchType){
+		this.fieldName = fieldName;
+		this.flag = flag;
+		this.searchType = searchType;
+		this.fieldValue = fieldValue;
 	}
 	
 	public BaseField(String fieldName,ESQueryType flag,ESSearchType searchType){
@@ -58,6 +72,14 @@ public class BaseField {
 
 	public void setFlag(ESQueryType flag) {
 		this.flag = flag;
+	}
+
+	public Object getFieldValue() {
+		return fieldValue;
+	}
+
+	public void setFieldValue(Object fieldValue) {
+		this.fieldValue = fieldValue;
 	}
 
 	

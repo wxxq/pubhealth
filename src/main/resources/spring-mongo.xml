@@ -3,15 +3,15 @@
 	xmlns:mongo="http://www.springframework.org/schema/data/mongo"
 	xmlns:util="http://www.springframework.org/schema/util"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans 
-          http://www.springframework.org/schema/beans/spring-beans-4.2.xsd 
+          http://www.springframework.org/schema/beans/spring-beans-4.0.xsd 
           http://www.springframework.org/schema/context 
-          http://www.springframework.org/schema/context/spring-context-4.2.xsd 
+          http://www.springframework.org/schema/context/spring-context-4.0.xsd 
           http://www.springframework.org/schema/data/mongo 
           http://www.springframework.org/schema/data/mongo/spring-mongo-1.7.xsd 
           http://www.springframework.org/schema/data/repository
           http://www.springframework.org/schema/data/repository/spring-repository-1.7.xsd
           http://www.springframework.org/schema/util 
-          http://www.springframework.org/schema/util/spring-util-4.2.xsd"
+          http://www.springframework.org/schema/util/spring-util-4.0.xsd"
 	default-lazy-init="default">
 	<context:property-placeholder location="classpath:db.properties" />
 	<!--credentials的配置形式是：用户名:密码@默认数据库 -->
