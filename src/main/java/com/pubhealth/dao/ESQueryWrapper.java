@@ -143,6 +143,9 @@ public class ESQueryWrapper {
 				matchQueryBuilder.type(matchField.getType());
 				tempQueryBuilder = matchQueryBuilder;
 				break;
+			case MATCH_PHRASE:
+				tempQueryBuilder = QueryBuilders.matchPhraseQuery(eskv.getFieldName(), eskv.getFieldValue());
+				break;
 			case WILDCARD:
 				PartField wildPartField = (PartField) eskv;
 				WildcardQueryBuilder wildQueryBuilder = QueryBuilders.wildcardQuery(key,wildPartField.getValue());
@@ -194,6 +197,7 @@ public class ESQueryWrapper {
 
 	public SearchResponse search(SearchSourceBuilder searchSourceBuilder) {
 		SearchRequest searchRequest = new SearchRequest(index.getName());
+		searchRequest.types(index.getType());
 		searchRequest.source(searchSourceBuilder);
 		SearchResponse searchResponse = null;
 		try {
