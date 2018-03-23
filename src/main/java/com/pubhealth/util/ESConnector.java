@@ -23,6 +23,4 @@ public class ESConnector {
 		RestHighLevelClient client = new RestHighLevelClient(SingleBuilderHolder.builder.build());
 		return client;
 	}
-	
-	
 }

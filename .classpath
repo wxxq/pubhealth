@@ -84,8 +84,7 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-aspects-4.0.2.RELEASE.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-core-4.0.2.RELEASE.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-data-mongodb-1.7.0.RELEASE.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-data-commons-1.10.0.RELEASE.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-data-commons-core-1.4.1.RELEASE.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-data-commons-1.10.0.RELEASE.jar" sourcepath="D:/apache-maven-3.5.2-bin/Repository/org/springframework/data/spring-data-commons/1.10.0.RELEASE/spring-data-commons-1.10.0.RELEASE-sources.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jackson-databind-2.9.4.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jackson-annotations-2.9.4.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jackson-core-2.9.4.jar"/>
