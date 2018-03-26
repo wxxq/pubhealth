@@ -62,9 +62,10 @@ import static java.lang.String.format;
 
 @Component("ESQueryWrapper")
 public class ESQueryWrapper {
+	
 	private final RestHighLevelClient client = ESConnector.getClient();
 
-	public ESQueryWrapper(RestHighLevelClient client) {
+	public ESQueryWrapper() {
 	}
 
 	public void wrapperBuilder(SearchSourceBuilder searchSourceBuilder, ESParam param) {
