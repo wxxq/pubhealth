@@ -8,19 +8,19 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.pubhealth.entity.Document;
-import com.pubhealth.service.MongoHealthDocService;
+import com.pubhealth.service.HealthDocMongoService;
 
 @Controller
-@RequestMapping("/test")
+@RequestMapping("/healthdoc_service")
 public class TestController {
 	
 	@Autowired
-	private MongoHealthDocService mongoHealthDocService;
+	private HealthDocMongoService mongoHealthDocService;
 	
 	@RequestMapping(value="hello",method=RequestMethod.POST,consumes = "application/json")
 	@ResponseBody
 	public Document hello(@RequestBody Document document){
-//		mongoHealthDocService.insert();
+		mongoHealthDocService.insert();
 		return document;
 	}
 }

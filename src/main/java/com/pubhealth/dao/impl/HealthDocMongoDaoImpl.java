@@ -5,17 +5,16 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
-import com.pubhealth.dao.HealthDocDao;
+import com.pubhealth.dao.HealthDocMongoDao;
 import com.pubhealth.entity.HealthDoc;
 
 /*
  * @author melo
 */
-@Repository("healthDocDaoImpl")  
-public class HealthDocDaoImpl implements HealthDocDao {
+@Repository("healthDocMongoDaoImpl")  
+public class HealthDocMongoDaoImpl implements HealthDocMongoDao {
 	
 	@Autowired
 	private MongoTemplate mongoTemplate;

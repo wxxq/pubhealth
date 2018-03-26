@@ -29,11 +29,4 @@ public class InfectionController {
 		return result;
 	}
 	
-//	@RequestMapping(value="/health_doc_search2",method = RequestMethod.POST,consumes = "application/json")
-//	@ResponseBody
-//	public String searchHealthDoc2(@RequestBody HealthDoc healthDoc,HttpServletRequest request,HttpServletResponse response){
-//		log.info(healthDoc.getPersonalName());
-//		String result=healthDocService.test2();
-//		return result;
-//	}
 }

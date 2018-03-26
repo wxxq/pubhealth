@@ -5,7 +5,7 @@ import com.pubhealth.entity.HealthDoc;
 /*
  * @author melo
 */
-public interface  HealthDocDao extends MongoBase<HealthDoc> {
+public interface  HealthDocMongoDao extends MongoBase<HealthDoc> {
 
 }
 

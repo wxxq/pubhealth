@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.apache.commons.lang.StringUtils;
 import org.elasticsearch.action.search.SearchResponse;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.pubhealth.dao.ESQueryWrapper;
@@ -12,15 +13,14 @@ import com.pubhealth.entity.Index;
 import com.pubhealth.entity.ES.ESParam;
 import com.pubhealth.entity.ES.ESSearchType;
 import com.pubhealth.entity.ES.TermField;
-import com.pubhealth.util.ESConnector;
 import com.pubhealth.util.ESResponseParse;
 
 @Service
 public class InfectionService {
 	Index index = new Index("infections", "infections");
-//	Index index = new Index("school", "students");
 
-	ESQueryWrapper dao = new ESQueryWrapper(ESConnector.getClient(), index);
+	@Autowired
+	private ESQueryWrapper dao;
 	
 	public String searchInfectionDoc(InfectionDoc infectionDoc){
 		ESParam param = new ESParam();
@@ -45,7 +45,7 @@ public class InfectionService {
 			param.setFrom(infectionDoc.getFirstIndex());
 		}
 		param.setSize(infectionDoc.getPageSize());
-		SearchResponse response = dao.commonQuery(param);
+		SearchResponse response = dao.commonQuery(param,index);
 		String json = ESResponseParse.parseJsonFromResponse(response);
 		return json;
 	}

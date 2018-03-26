@@ -1,32 +1,27 @@
 package com.pubhealth.service;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.elasticsearch.action.search.SearchResponse;
-import org.elasticsearch.index.search.MatchQuery.Type;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.pubhealth.dao.ESQueryWrapper;
 import com.pubhealth.entity.HealthDoc;
 import com.pubhealth.entity.Index;
-import com.pubhealth.entity.ES.BaseField;
 import com.pubhealth.entity.ES.ESParam;
-import com.pubhealth.entity.ES.ESQueryType;
 import com.pubhealth.entity.ES.ESSearchType;
-import com.pubhealth.entity.ES.MatchField;
 import com.pubhealth.entity.ES.TermField;
-import com.pubhealth.util.ESConnector;
 import com.pubhealth.util.ESResponseParse;
 
 @Service
 public class HealthDocService {
 	
 	Index index = new Index("pubhealth", "health_doc");
-//	Index index = new Index("school", "students");
 
-	ESQueryWrapper dao = new ESQueryWrapper(ESConnector.getClient(), index);
+	@Autowired
+	private ESQueryWrapper dao;
 	
 	public String searchHealthDoc(HealthDoc healthDoc){
 		ESParam param = new ESParam();
@@ -53,7 +48,7 @@ public class HealthDocService {
 			param.setFrom(healthDoc.getFirstIndex());
 		}
 		param.setSize(healthDoc.getPageSize());
-		SearchResponse response = dao.commonQuery(param);
+		SearchResponse response = dao.commonQuery(param,index);
 		String json = ESResponseParse.parseJsonFromResponse(response);
 		return json;
 	}
@@ -69,7 +64,7 @@ public class HealthDocService {
 //		param.fieldList.add(g2);
 //		param.fieldList.add(g3);
 //		param.fieldList.add(g4);
-		SearchResponse response = dao.commonQuery(param);
+		SearchResponse response = dao.commonQuery(param,index);
 		String json = ESResponseParse.parseJsonFromResponse(response);
 		System.out.println(json.toString());
 		return json;
@@ -84,7 +79,7 @@ public class HealthDocService {
 //		param.fieldList.add(g);
 		param.fieldList.add(g2);
 		param.fieldList.add(g3);
-		SearchResponse response = dao.commonQuery(param);
+		SearchResponse response = dao.commonQuery(param,index);
 		String json = ESResponseParse.parseJsonFromResponse(response);
 		System.out.println(json.toString());
 		return json;

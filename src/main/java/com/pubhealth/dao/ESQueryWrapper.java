@@ -43,6 +43,7 @@ import org.elasticsearch.search.sort.SortBuilders;
 import org.elasticsearch.search.sort.SortOrder;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.springframework.stereotype.Component;
 
 import com.pubhealth.entity.Index;
 import com.pubhealth.entity.ES.BaseField;
@@ -51,6 +52,7 @@ import com.pubhealth.entity.ES.CollectionField;
 import com.pubhealth.entity.ES.ESMetrics;
 import com.pubhealth.entity.ES.ESParam;
 import com.pubhealth.entity.ES.TermField;
+import com.pubhealth.util.ESConnector;
 import com.pubhealth.entity.ES.MatchField;
 import com.pubhealth.entity.ES.MutilMatchField;
 import com.pubhealth.entity.ES.PartField;
@@ -58,13 +60,11 @@ import com.pubhealth.entity.ES.RangeField;
 
 import static java.lang.String.format;
 
+@Component("ESQueryWrapper")
 public class ESQueryWrapper {
-	private Index index;
-	private final RestHighLevelClient client;
+	private final RestHighLevelClient client = ESConnector.getClient();
 
-	public ESQueryWrapper(RestHighLevelClient client, Index index) {
-		this.client = client;
-		this.index = index;
+	public ESQueryWrapper(RestHighLevelClient client) {
 	}
 
 	public void wrapperBuilder(SearchSourceBuilder searchSourceBuilder, ESParam param) {
@@ -88,7 +88,7 @@ public class ESQueryWrapper {
 		}
 	}
 
-	public SearchResponse commonQuery(ESParam param) {
+	public SearchResponse commonQuery(ESParam param, Index index) {
 		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
 		// 设置排序字段
 		wrapperBuilder(searchSourceBuilder, param);
@@ -102,26 +102,25 @@ public class ESQueryWrapper {
 		}
 		// 传入聚合条件
 		addAggregationQuery(searchSourceBuilder, param);
-		return search(searchSourceBuilder);
+		return search(searchSourceBuilder, index);
 	}
 
-	
 	public BoolQueryBuilder wrapperBoolQuery(List<BaseField> fieldList) {
 		BoolQueryBuilder boolQuery = QueryBuilders.boolQuery();
 		for (BaseField eskv : fieldList) {
 			QueryBuilder tempQueryBuilder = null;
-			String key = eskv.getFieldName() ;
+			String key = eskv.getFieldName();
 			switch (eskv.flag) {
 			case TERM:
 				tempQueryBuilder = QueryBuilders.termQuery(key, ((TermField) eskv).getFieldValue());
 				break;
 			case TERMS:
-				tempQueryBuilder = QueryBuilders.termsQuery(key,
-						((CollectionField) eskv).getFieldCollection());
+				tempQueryBuilder = QueryBuilders.termsQuery(key, ((CollectionField) eskv).getFieldCollection());
 				break;
 			case MUITL_MATCH:
-				MutilMatchField mutilField = (MutilMatchField)eskv;
-				MultiMatchQueryBuilder multiMatchQueryBuilder = QueryBuilders.multiMatchQuery(mutilField.getFieldValue(),mutilField.getMutilFields());
+				MutilMatchField mutilField = (MutilMatchField) eskv;
+				MultiMatchQueryBuilder multiMatchQueryBuilder = QueryBuilders
+						.multiMatchQuery(mutilField.getFieldValue(), mutilField.getMutilFields());
 				multiMatchQueryBuilder.operator(mutilField.getOperator());
 				multiMatchQueryBuilder.minimumShouldMatch(mutilField.getMinimum_should_match());
 				multiMatchQueryBuilder.boost(mutilField.getBoost());
@@ -135,8 +134,7 @@ public class ESQueryWrapper {
 				break;
 			case MATCH:
 				MatchField matchField = (MatchField) eskv;
-				MatchQueryBuilder matchQueryBuilder = QueryBuilders.matchQuery(key,
-						matchField.getFieldValue());
+				MatchQueryBuilder matchQueryBuilder = QueryBuilders.matchQuery(key, matchField.getFieldValue());
 				matchQueryBuilder.operator(matchField.getOperator());
 				matchQueryBuilder.minimumShouldMatch(matchField.getMinimum_should_match());
 				matchQueryBuilder.boost(matchField.getBoost());
@@ -148,7 +146,7 @@ public class ESQueryWrapper {
 				break;
 			case WILDCARD:
 				PartField wildPartField = (PartField) eskv;
-				WildcardQueryBuilder wildQueryBuilder = QueryBuilders.wildcardQuery(key,wildPartField.getValue());
+				WildcardQueryBuilder wildQueryBuilder = QueryBuilders.wildcardQuery(key, wildPartField.getValue());
 				tempQueryBuilder = wildQueryBuilder;
 				break;
 			case PREFIX:
@@ -195,7 +193,7 @@ public class ESQueryWrapper {
 		return boolQuery;
 	}
 
-	public SearchResponse search(SearchSourceBuilder searchSourceBuilder) {
+	public SearchResponse search(SearchSourceBuilder searchSourceBuilder, Index index) {
 		SearchRequest searchRequest = new SearchRequest(index.getName());
 		searchRequest.types(index.getType());
 		searchRequest.source(searchSourceBuilder);
@@ -220,7 +218,7 @@ public class ESQueryWrapper {
 		aggregation.subAggregation(maxAggregation);
 		aggregation.subAggregation(minAggregation);
 		searchSourceBuilder.aggregation(aggregation);
-		SearchResponse searchResponse = search(searchSourceBuilder);
+		SearchResponse searchResponse = search(searchSourceBuilder, new Index(null, null));
 		Aggregations aggregations = searchResponse.getAggregations();
 		Terms terms = aggregations.get("count_age");
 		List<? extends Bucket> buckets = terms.getBuckets();
@@ -242,7 +240,7 @@ public class ESQueryWrapper {
 		classAggregation.subAggregation(ageAggregation);
 		ageAggregation.subAggregation(avgHeightAggregation);
 		searchSourceBuilder.aggregation(classAggregation);
-		SearchResponse searchResponse = search(searchSourceBuilder);
+		SearchResponse searchResponse = search(searchSourceBuilder, new Index(null, null));
 		Aggregations aggregations = searchResponse.getAggregations();
 		Terms terms = aggregations.get("term_class");
 		List<? extends Bucket> buckets = terms.getBuckets();
