@@ -17,7 +17,7 @@ import com.pubhealth.util.ESResponseParse;
 
 @Service
 public class ChildOneService {
-	Index index = new Index("supervision_info", "supervision_info");
+	Index index = new Index("children_oneyears", "children_oneyears");
 	
 	@Autowired
 	private ESQueryWrapper dao;
@@ -37,11 +37,11 @@ public class ChildOneService {
 			param.fieldList.add(new TermField("create_id_card.keyword", childOne.getIdCard(),ESSearchType.FILTER));
 		}
 		if(StringUtils.isNotEmpty(childOne.getPersonalName())){
-			param.fieldList.add(new TermField("personal_name.keyword", childOne.getPersonalName(), ESSearchType.FILTER));
+			param.fieldList.add(new TermField("doctor_signature.keyword", childOne.getPersonalName(), ESSearchType.FILTER));
 		}
-		if(StringUtils.isNotEmpty(childOne.getPhone())){
-			param.fieldList.add(new TermField("contacts_phone.keyword", childOne.getPhone(),ESSearchType.FILTER));
-		}
+//		if(StringUtils.isNotEmpty(childOne.getPhone())){
+//			param.fieldList.add(new TermField("contacts_phone.keyword", childOne.getPhone(),ESSearchType.FILTER));
+//		}
 		if(childOne.getFirstIndex()>0){
 			param.setFrom(childOne.getFirstIndex());
 		}
