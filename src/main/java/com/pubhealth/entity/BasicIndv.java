@@ -7,6 +7,8 @@ public class BasicIndv extends Page {
 	private String personalName;
 	private String idCard;
 	private String phone;
+	private String uniqueNumber;
+	
 	public int getProvinceId() {
 		return provinceId;
 	}
@@ -43,5 +45,10 @@ public class BasicIndv extends Page {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
-	
+	public String getUniqueNumber() {
+		return uniqueNumber;
+	}
+	public void setUniqueNumber(String uniqueNumber) {
+		this.uniqueNumber = uniqueNumber;
+	}
 }

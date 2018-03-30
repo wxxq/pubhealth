@@ -42,6 +42,9 @@ public class BasicIndvService {
 		if(StringUtils.isNotEmpty(basicIndv.getPhone())){
 			param.fieldList.add(new TermField("contacts_phone.keyword", basicIndv.getPhone(),ESSearchType.FILTER));
 		}
+		if(StringUtils.isNotEmpty(basicIndv.getUniqueNumber())){
+			param.fieldList.add(new TermField("unique_number.keyword", basicIndv.getUniqueNumber(),ESSearchType.FILTER));
+		}
 		if(basicIndv.getFirstIndex()>0){
 			param.setFrom(basicIndv.getFirstIndex());
 		}
