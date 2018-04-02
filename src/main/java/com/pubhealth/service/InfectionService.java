@@ -12,6 +12,7 @@ import com.pubhealth.entity.InfectionDoc;
 import com.pubhealth.entity.Index;
 import com.pubhealth.entity.ES.ESParam;
 import com.pubhealth.entity.ES.ESSearchType;
+import com.pubhealth.entity.ES.RangeField;
 import com.pubhealth.entity.ES.TermField;
 import com.pubhealth.util.ESResponseParse;
 
@@ -41,6 +42,10 @@ public class InfectionService {
 			param.fieldList.add(new TermField("responsible.keyword", infectionDoc.getPersonalName(), ESSearchType.FILTER));
 		}
 	
+		if(StringUtils.isNotEmpty(infectionDoc.getFromTime()) || StringUtils.isNotEmpty(infectionDoc.getToTime())) {
+			param.fieldList.add(new RangeField("date", infectionDoc.getFromTime(), true, infectionDoc.getToTime(), true, ESSearchType.MUST));
+		}
+		
 		if(infectionDoc.getFirstIndex()>0){
 			param.setFrom(infectionDoc.getFirstIndex());
 		}

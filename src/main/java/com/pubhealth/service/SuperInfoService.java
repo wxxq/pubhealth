@@ -12,12 +12,13 @@ import com.pubhealth.entity.SuperInfo;
 import com.pubhealth.entity.Index;
 import com.pubhealth.entity.ES.ESParam;
 import com.pubhealth.entity.ES.ESSearchType;
+import com.pubhealth.entity.ES.RangeField;
 import com.pubhealth.entity.ES.TermField;
 import com.pubhealth.util.ESResponseParse;
 
 @Service
 public class SuperInfoService {
-	Index index = new Index("supervision_info", "supervision_info");
+	private Index supervisionInfoIndex = new Index("supervision_info", "supervision_info");
 	
 	@Autowired
 	private ESQueryWrapper dao;
@@ -39,14 +40,17 @@ public class SuperInfoService {
 		if(StringUtils.isNotEmpty(superInfo.getPersonalName())){
 			param.fieldList.add(new TermField("report_name.keyword", superInfo.getPersonalName(), ESSearchType.FILTER));
 		}
-//		if(StringUtils.isNotEmpty(superInfo.getPhone())){
-//			param.fieldList.add(new TermField("contacts_phone.keyword", superInfo.getPhone(),ESSearchType.FILTER));
-//		}
+
+		if(StringUtils.isNotEmpty(superInfo.getFromTime()) || StringUtils.isNotEmpty(superInfo.getToTime())) {
+			param.fieldList.add(new RangeField("found_date", superInfo.getFromTime(), true, superInfo.getToTime(), true, ESSearchType.MUST));
+		}
+		
 		if(superInfo.getFirstIndex()>0){
 			param.setFrom(superInfo.getFirstIndex());
 		}
 		param.setSize(superInfo.getPageSize());
-		SearchResponse response = dao.commonQuery(param,index);
+		
+		SearchResponse response = dao.commonQuery(param,supervisionInfoIndex);
 		String json = ESResponseParse.parseJsonFromResponse(response);
 		return json;
 	}

@@ -12,6 +12,7 @@ import com.pubhealth.entity.HealthEdu;
 import com.pubhealth.entity.Index;
 import com.pubhealth.entity.ES.ESParam;
 import com.pubhealth.entity.ES.ESSearchType;
+import com.pubhealth.entity.ES.RangeField;
 import com.pubhealth.entity.ES.TermField;
 import com.pubhealth.util.ESResponseParse;
 
@@ -39,7 +40,11 @@ public class HealthEduService {
 		if(StringUtils.isNotEmpty(healthEdu.getPersonalName())){
 			param.fieldList.add(new TermField("organizer.keyword", healthEdu.getPersonalName(), ESSearchType.FILTER));
 		}
-
+		
+		if(StringUtils.isNotEmpty(healthEdu.getFromTime()) || StringUtils.isNotEmpty(healthEdu.getToTime())) {
+			param.fieldList.add(new RangeField("time", healthEdu.getFromTime(), true, healthEdu.getToTime(), true, ESSearchType.MUST));
+		}
+		
 		if(healthEdu.getFirstIndex()>0){
 			param.setFrom(healthEdu.getFirstIndex());
 		}

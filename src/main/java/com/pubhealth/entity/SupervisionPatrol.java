@@ -1,16 +1,14 @@
 package com.pubhealth.entity;
 
-public class SuperInfo extends Page {
+public class SupervisionPatrol extends Page {
 	private int provinceId;
 	private int cityId;
 	private int districtId;
 	private String personalName;
 	private String idCard;
-	private String phone;
 	
 	private String fromTime;
 	private String toTime;
-	
 	public int getProvinceId() {
 		return provinceId;
 	}
@@ -41,12 +39,6 @@ public class SuperInfo extends Page {
 	public void setIdCard(String idCard) {
 		this.idCard = idCard;
 	}
-	public String getPhone() {
-		return phone;
-	}
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
 	public String getFromTime() {
 		return fromTime;
 	}
@@ -59,5 +51,6 @@ public class SuperInfo extends Page {
 	public void setToTime(String toTime) {
 		this.toTime = toTime;
 	}
+	
 	
 }

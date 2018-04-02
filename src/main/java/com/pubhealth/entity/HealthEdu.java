@@ -1,11 +1,19 @@
 package com.pubhealth.entity;
 
+import java.text.SimpleDateFormat;
+
+import org.elasticsearch.action.fieldstats.FieldStats.Date;
+
 public class HealthEdu extends Page {
 	private int provinceId;
 	private int cityId;
 	private int districtId;
 	private String personalName;
 	private String idCard;
+	
+	private String fromTime;
+	private String toTime;
+	
 	public int getProvinceId() {
 		return provinceId;
 	}
@@ -36,5 +44,17 @@ public class HealthEdu extends Page {
 	public void setIdCard(String idCard) {
 		this.idCard = idCard;
 	}
-	
+	public String getFromTime() {
+		return fromTime;
+	}
+	public void setFromTime(String fromTime) {
+		this.fromTime = fromTime;
+	}
+	public String getToTime() {
+		return toTime;
+	}
+	public void setToTime(String toTime) {
+		this.toTime = toTime;
+	}
+		
 }
