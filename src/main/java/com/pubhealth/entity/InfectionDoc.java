@@ -10,6 +10,15 @@ public class InfectionDoc extends Page {
 	private String fromTime;
 	private String toTime;
 	
+	private String uniqueNumber;
+	
+	public String getUniqueNumber() {
+		return uniqueNumber;
+	}
+	public void setUniqueNumber(String uniqueNumber) {
+		this.uniqueNumber = uniqueNumber;
+	}
+	
 	public String getPersonalName() {
 		return personalName;
 	}

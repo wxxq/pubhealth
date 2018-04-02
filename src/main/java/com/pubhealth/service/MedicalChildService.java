@@ -39,6 +39,9 @@ public class MedicalChildService {
 		if(StringUtils.isNotEmpty(medicalChild.getPersonalName())){
 			param.fieldList.add(new TermField("doctor_signature.keyword", medicalChild.getPersonalName(), ESSearchType.FILTER));
 		}
+		if(StringUtils.isNotEmpty(medicalChild.getUniqueNumber())){
+			param.fieldList.add(new TermField("unique_number.keyword", medicalChild.getUniqueNumber(),ESSearchType.FILTER));
+		}
 //		if(StringUtils.isNotEmpty(medicalChild.getPhone())){
 //			param.fieldList.add(new TermField("contacts_phone.keyword", medicalChild.getPhone(),ESSearchType.FILTER));
 //		}

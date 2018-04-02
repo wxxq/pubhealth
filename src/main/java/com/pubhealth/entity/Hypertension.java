@@ -7,6 +7,15 @@ public class Hypertension  extends Page {
 	private int cityId;
 	private int districtId;
 
+	private String uniqueNumber;
+	
+	public String getUniqueNumber() {
+		return uniqueNumber;
+	}
+	public void setUniqueNumber(String uniqueNumber) {
+		this.uniqueNumber = uniqueNumber;
+	}
+	
 	public String getPersonalName() {
 		return personalName;
 	}

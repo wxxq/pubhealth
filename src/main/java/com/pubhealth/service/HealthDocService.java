@@ -44,6 +44,8 @@ public class HealthDocService {
 		if(StringUtils.isNotEmpty(healthDoc.getPhone())){
 			param.fieldList.add(new TermField("phone.keyword", healthDoc.getPhone(),ESSearchType.FILTER));
 		}
+		
+		
 		if(healthDoc.getFirstIndex()>0){
 			param.setFrom(healthDoc.getFirstIndex());
 		}

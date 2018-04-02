@@ -39,6 +39,9 @@ public class PsychoFileService {
 		if(StringUtils.isNotEmpty(psychoFile.getPersonalName())){
 			param.fieldList.add(new TermField("informed_consent_name.keyword", psychoFile.getPersonalName(), ESSearchType.FILTER));
 		}
+		if(StringUtils.isNotEmpty(psychoFile.getUniqueNumber())){
+			param.fieldList.add(new TermField("unique_number.keyword", psychoFile.getUniqueNumber(),ESSearchType.FILTER));
+		}
 //		if(StringUtils.isNotEmpty(psychoFile.getPhone())){
 //			param.fieldList.add(new TermField("contacts_phone.keyword", psychoFile.getPhone(),ESSearchType.FILTER));
 //		}

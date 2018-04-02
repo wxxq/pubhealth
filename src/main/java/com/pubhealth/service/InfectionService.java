@@ -46,6 +46,10 @@ public class InfectionService {
 			param.fieldList.add(new RangeField("date", infectionDoc.getFromTime(), true, infectionDoc.getToTime(), true, ESSearchType.MUST));
 		}
 		
+		if(StringUtils.isNotEmpty(infectionDoc.getUniqueNumber())){
+			param.fieldList.add(new TermField("unique_number.keyword", infectionDoc.getUniqueNumber(),ESSearchType.FILTER));
+		}
+		
 		if(infectionDoc.getFirstIndex()>0){
 			param.setFrom(infectionDoc.getFirstIndex());
 		}

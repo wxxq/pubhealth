@@ -41,6 +41,9 @@ public class HypertensionService {
 		if(StringUtils.isNotEmpty(hypertension.getPersonalName())){
 			param.fieldList.add(new TermField("doctor_signature.keyword", hypertension.getPersonalName(), ESSearchType.FILTER));
 		}
+		if(StringUtils.isNotEmpty(hypertension.getUniqueNumber())){
+			param.fieldList.add(new TermField("unique_number.keyword", hypertension.getUniqueNumber(),ESSearchType.FILTER));
+		}
 	
 		if(hypertension.getFirstIndex()>0){
 			param.setFrom(hypertension.getFirstIndex());

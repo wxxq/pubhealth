@@ -42,6 +42,10 @@ public class GravidaOneService {
 //		if(StringUtils.isNotEmpty(psychoFile.getPhone())){
 //			param.fieldList.add(new TermField("contacts_phone.keyword", psychoFile.getPhone(),ESSearchType.FILTER));
 //		}
+		
+		if(StringUtils.isNotEmpty(psychoFile.getUniqueNumber())){
+			param.fieldList.add(new TermField("unique_number.keyword", psychoFile.getUniqueNumber(),ESSearchType.FILTER));
+		}
 		if(psychoFile.getFirstIndex()>0){
 			param.setFrom(psychoFile.getFirstIndex());
 		}

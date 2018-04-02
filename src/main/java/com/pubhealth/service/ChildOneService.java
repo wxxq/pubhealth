@@ -39,6 +39,11 @@ public class ChildOneService {
 		if(StringUtils.isNotEmpty(childOne.getPersonalName())){
 			param.fieldList.add(new TermField("doctor_signature.keyword", childOne.getPersonalName(), ESSearchType.FILTER));
 		}
+		
+		if(StringUtils.isNotEmpty(childOne.getUniqueNumber())){
+			param.fieldList.add(new TermField("unique_number.keyword", childOne.getUniqueNumber(),ESSearchType.FILTER));
+		}
+		
 //		if(StringUtils.isNotEmpty(childOne.getPhone())){
 //			param.fieldList.add(new TermField("contacts_phone.keyword", childOne.getPhone(),ESSearchType.FILTER));
 //		}

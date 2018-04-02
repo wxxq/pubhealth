@@ -7,6 +7,8 @@ public class Glycuresis extends Page {
 	private int cityId;
 	private int districtId;
 	
+	private String uniqueNumber;
+	
 	public String getPersonalName() {
 		return personalName;
 	}
@@ -36,6 +38,13 @@ public class Glycuresis extends Page {
 	}
 	public void setDistrictId(int districtId) {
 		this.districtId = districtId;
+	}
+	public String getUniqueNumber() {
+		return uniqueNumber;
+	}
+	
+	public void setUniqueNumber(String uniqueNumber) {
+		this.uniqueNumber = uniqueNumber;
 	}
 	
 	

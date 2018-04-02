@@ -1,21 +1,13 @@
 package com.pubhealth.entity;
 
-public class GravidaOne extends Page {
+public class ChildrenNewborn extends Page{
 	private int provinceId;
 	private int cityId;
 	private int districtId;
 	private String personalName;
 	private String idCard;
-	private String phone;
-	
 	private String uniqueNumber;
 	
-	public String getUniqueNumber() {
-		return uniqueNumber;
-	}
-	public void setUniqueNumber(String uniqueNumber) {
-		this.uniqueNumber = uniqueNumber;
-	}
 	public int getProvinceId() {
 		return provinceId;
 	}
@@ -46,11 +38,12 @@ public class GravidaOne extends Page {
 	public void setIdCard(String idCard) {
 		this.idCard = idCard;
 	}
-	public String getPhone() {
-		return phone;
+	public String getUniqueNumber() {
+		return uniqueNumber;
 	}
-	public void setPhone(String phone) {
-		this.phone = phone;
+	public void setUniqueNumber(String uniqueNumber) {
+		this.uniqueNumber = uniqueNumber;
 	}
+	
 	
 }

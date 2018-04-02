@@ -42,6 +42,10 @@ public class GlycuresisService  {
 			param.fieldList.add(new TermField("doctor_signature.keyword", glycuresis.getPersonalName(), ESSearchType.FILTER));
 		}
 	
+		if(StringUtils.isNotEmpty(glycuresis.getUniqueNumber())){
+			param.fieldList.add(new TermField("unique_number.keyword", glycuresis.getUniqueNumber(),ESSearchType.FILTER));
+		}
+		
 		if(glycuresis.getFirstIndex()>0){
 			param.setFrom(glycuresis.getFirstIndex());
 		}

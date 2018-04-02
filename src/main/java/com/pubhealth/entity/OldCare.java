@@ -7,6 +7,16 @@ public class OldCare extends Page {
 	private String personalName;
 	private String idCard;
 	private String phone;
+	
+	private String uniqueNumber;
+	
+	public String getUniqueNumber() {
+		return uniqueNumber;
+	}
+	public void setUniqueNumber(String uniqueNumber) {
+		this.uniqueNumber = uniqueNumber;
+	}
+	
 	public int getProvinceId() {
 		return provinceId;
 	}

@@ -36,6 +36,9 @@ public class OldCareService {
 		if(StringUtils.isNotEmpty(oldCare.getIdCard())){
 			param.fieldList.add(new TermField("create_id_card.keyword", oldCare.getIdCard(),ESSearchType.FILTER));
 		}
+		if(StringUtils.isNotEmpty(oldCare.getUniqueNumber())){
+			param.fieldList.add(new TermField("unique_number.keyword", oldCare.getUniqueNumber(),ESSearchType.FILTER));
+		}
 // 表里面没有名字字段
 //		if(StringUtils.isNotEmpty(oldCare.getPersonalName())){
 //			param.fieldList.add(new TermField("collection_name.keyword", oldCare.getPersonalName(), ESSearchType.FILTER));
