@@ -46,7 +46,7 @@ public class HealthEduService {
 		}
 		
 		if(healthEdu.getId() != -1) {
-			param.fieldList.add(new TermField("uid", healthEdu.getId(), ESSearchType.FILTER));
+			param.fieldList.add(new TermField("id", healthEdu.getId(), ESSearchType.FILTER));
 		}
 		
 		if(healthEdu.getFirstIndex()>0){
