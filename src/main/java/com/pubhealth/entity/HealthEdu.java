@@ -20,7 +20,7 @@ public class HealthEdu extends Page {
 	
 	public HealthEdu() {
 		super();
-		id = -1;
+		id = 0;
 	}
 	public int getProvinceId() {
 		return provinceId;

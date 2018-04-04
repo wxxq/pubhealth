@@ -9,6 +9,20 @@ public class SupervisionPatrol extends Page {
 	
 	private String fromTime;
 	private String toTime;
+	private String organization;
+	private int id;
+	
+	SupervisionPatrol(){
+		super();
+		id = 0;
+	}
+	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	public int getProvinceId() {
 		return provinceId;
 	}
@@ -50,6 +64,14 @@ public class SupervisionPatrol extends Page {
 	}
 	public void setToTime(String toTime) {
 		this.toTime = toTime;
+	}
+
+	public String getOrganization() {
+		return organization;
+	}
+
+	public void setOrganization(String organization) {
+		this.organization = organization;
 	}
 	
 	

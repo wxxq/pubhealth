@@ -45,6 +45,14 @@ public class SuperInfoService {
 			param.fieldList.add(new RangeField("found_date", superInfo.getFromTime(), true, superInfo.getToTime(), true, ESSearchType.MUST));
 		}
 		
+		if(StringUtils.isNotEmpty(superInfo.getOrganization()) ) {
+			param.fieldList.add(new TermField("organization.keyword", superInfo.getOrganization(), ESSearchType.FILTER));
+		}
+		
+		if(superInfo.getId() != 0) {
+			param.fieldList.add(new TermField("id", superInfo.getId(), ESSearchType.FILTER));
+		}
+		
 		if(superInfo.getFirstIndex()>0){
 			param.setFrom(superInfo.getFirstIndex());
 		}

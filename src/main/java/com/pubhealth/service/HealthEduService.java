@@ -45,7 +45,7 @@ public class HealthEduService {
 			param.fieldList.add(new RangeField("time", healthEdu.getFromTime(), true, healthEdu.getToTime(), true, ESSearchType.MUST));
 		}
 		
-		if(healthEdu.getId() != -1) {
+		if(healthEdu.getId() != 0) {
 			param.fieldList.add(new TermField("id", healthEdu.getId(), ESSearchType.FILTER));
 		}
 		

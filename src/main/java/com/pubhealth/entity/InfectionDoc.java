@@ -12,6 +12,13 @@ public class InfectionDoc extends Page {
 	
 	private String uniqueNumber;
 	
+	private int id;
+	
+	public InfectionDoc() {
+		super();
+		id = 0;
+	}
+	
 	public String getUniqueNumber() {
 		return uniqueNumber;
 	}
@@ -73,5 +80,12 @@ public class InfectionDoc extends Page {
 
 	public void setToTime(String toTime) {
 		this.toTime = toTime;
+	}
+	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
 	}
 }

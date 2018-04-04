@@ -46,7 +46,12 @@ public class SupervisionPatrolService {
 			param.fieldList.add(new RangeField("patrol_date", supervisionPatrol.getFromTime(), true, supervisionPatrol.getToTime(), true, ESSearchType.MUST));	
 
 		}
-		
+		if(StringUtils.isNotEmpty(supervisionPatrol.getOrganization()) ) {
+			param.fieldList.add(new TermField("organization.keyword", supervisionPatrol.getOrganization(), ESSearchType.FILTER));
+		}
+		if(supervisionPatrol.getId() != 0) {
+			param.fieldList.add(new TermField("id", supervisionPatrol.getId(), ESSearchType.FILTER));
+		}
 		if(supervisionPatrol.getFirstIndex()>0){
 			param.setFrom(supervisionPatrol.getFirstIndex());
 		}
