@@ -23,8 +23,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.pubhealth.dao.ESQueryWrapper;
 import com.pubhealth.entity.Document;
 import com.pubhealth.entity.PsychoFile;
+import com.pubhealth.entity.VaccRecord;
 import com.pubhealth.entity.Index;
-import com.pubhealth.service.PsychoFileService;
+import com.pubhealth.service.VaccRecordService;
 import com.pubhealth.util.ESConnector;
 
 
@@ -34,13 +35,13 @@ public class VaccRecordController {
 	
 	Logger log=Logger.getLogger(VaccRecordController.class);
 	@Autowired
-	private PsychoFileService psychoFileService;
+	private VaccRecordService vaccRecordService;
 	
 	@RequestMapping(value="/vacc_record_search",method = RequestMethod.POST,consumes = "application/json")
 	@ResponseBody
-	public String searchBasicIndv(@RequestBody PsychoFile psychoFile,HttpServletRequest request,HttpServletResponse response){
-		log.info(psychoFile.getPersonalName());
-		String result=psychoFileService.search(psychoFile);
+	public String searchBasicIndv(@RequestBody VaccRecord vaccRecord,HttpServletRequest request,HttpServletResponse response){
+		log.info(vaccRecord.getPersonalName());
+		String result=vaccRecordService.search(vaccRecord);
 		return result;
 	}
 	

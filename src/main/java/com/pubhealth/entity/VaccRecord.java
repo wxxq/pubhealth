@@ -7,6 +7,8 @@ public class VaccRecord extends Page {
 	private String personalName;
 	private String idCard;
 	private String phone;
+	private String bornId;	// unique_number
+	
 	public int getProvinceId() {
 		return provinceId;
 	}
@@ -42,6 +44,12 @@ public class VaccRecord extends Page {
 	}
 	public void setPhone(String phone) {
 		this.phone = phone;
+	}
+	public String getBornId() {
+		return bornId;
+	}
+	public void setBornId(String bornId) {
+		this.bornId = bornId;
 	}
 	
 }
