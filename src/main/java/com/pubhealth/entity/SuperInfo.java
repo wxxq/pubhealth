@@ -11,20 +11,23 @@ public class SuperInfo extends Page {
 	private String fromTime;
 	private String toTime;
 	private String organization;
-	private int id;
+	private String uid;
 	
 	SuperInfo(){
 		super();
-		id = 0;
 	}
 	
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
 	
+	public String getUid() {
+		return uid;
+	}
+
+	public void setUid(String uid) {
+		this.uid = uid;
+	}
+
+
+
 	public int getProvinceId() {
 		return provinceId;
 	}

@@ -49,8 +49,8 @@ public class SuperInfoService {
 			param.fieldList.add(new TermField("organization.keyword", superInfo.getOrganization(), ESSearchType.FILTER));
 		}
 		
-		if(superInfo.getId() != 0) {
-			param.fieldList.add(new TermField("id", superInfo.getId(), ESSearchType.FILTER));
+		if(StringUtils.isNotEmpty(superInfo.getUid())) {
+			param.fieldList.add(new TermField("uid", superInfo.getUid(), ESSearchType.FILTER));
 		}
 		
 		if(superInfo.getFirstIndex()>0){

@@ -50,8 +50,8 @@ public class InfectionService {
 			param.fieldList.add(new TermField("unique_number.keyword", infectionDoc.getUniqueNumber(),ESSearchType.FILTER));
 		}
 		
-		if(infectionDoc.getId() != 0) {
-			param.fieldList.add(new TermField("id", infectionDoc.getId(), ESSearchType.FILTER));
+		if(StringUtils.isNotEmpty(infectionDoc.getUid())) {
+			param.fieldList.add(new TermField("uid", infectionDoc.getUid(), ESSearchType.FILTER));
 		}
 		
 		if(infectionDoc.getFirstIndex()>0){

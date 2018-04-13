@@ -11,7 +11,7 @@ public class HealthEdu extends Page {
 	private String personalName;
 	private String idCard;
 	
-	private int id;
+	private String uid;
 	
 	private String fromTime;
 	private String toTime;
@@ -20,7 +20,6 @@ public class HealthEdu extends Page {
 	
 	public HealthEdu() {
 		super();
-		id = 0;
 	}
 	public int getProvinceId() {
 		return provinceId;
@@ -53,11 +52,12 @@ public class HealthEdu extends Page {
 		this.idCard = idCard;
 	}
 
-	public int getId() {
-		return id;
+
+	public String getUid() {
+		return uid;
 	}
-	public void setId(int id) {
-		this.id = id;
+	public void setUid(String uid) {
+		this.uid = uid;
 	}
 	public String getFromTime() {
 		return fromTime;

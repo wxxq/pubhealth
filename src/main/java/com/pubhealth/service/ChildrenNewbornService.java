@@ -36,7 +36,7 @@ public class ChildrenNewbornService {
 			param.fieldList.add(new TermField("district_id", childrenNewborn.getDistrictId(), ESSearchType.FILTER));
 		}
 		if(StringUtils.isNotEmpty(childrenNewborn.getIdCard())){
-			param.fieldList.add(new TermField("create_id_card.keyword", childrenNewborn.getIdCard(),ESSearchType.FILTER));
+			param.fieldList.add(new TermField("id_card.keyword", childrenNewborn.getIdCard(),ESSearchType.FILTER));
 		}
 		if(StringUtils.isNotEmpty(childrenNewborn.getPersonalName())){
 			param.fieldList.add(new TermField("doctor_signature.keyword", childrenNewborn.getPersonalName(), ESSearchType.FILTER));
