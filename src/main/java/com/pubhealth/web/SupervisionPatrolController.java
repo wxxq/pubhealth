@@ -17,7 +17,7 @@ import com.pubhealth.service.SupervisionPatrolService;
 @Controller
 @RequestMapping("/pub_service")
 public class SupervisionPatrolController {
-	Logger log=Logger.getLogger(SuperInfoController.class);
+	Logger log=Logger.getLogger(SupervisionPatrolController.class);
 	@Autowired
 	private SupervisionPatrolService supervisonPatrolService;
 	
