@@ -52,6 +52,9 @@ public class SupervisionPatrolService {
 		if(StringUtils.isNotEmpty(supervisionPatrol.getUid())) {
 			param.fieldList.add(new TermField("uid", supervisionPatrol.getUid(), ESSearchType.FILTER));
 		}
+		if(StringUtils.isNotEmpty(supervisionPatrol.getSort())) {
+			param.setSortKeys(supervisionPatrol.getSortKeys());
+		}
 		if(supervisionPatrol.getFirstIndex()>0){
 			param.setFrom(supervisionPatrol.getFirstIndex());
 		}

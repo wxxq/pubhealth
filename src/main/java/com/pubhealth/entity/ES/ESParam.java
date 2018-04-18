@@ -14,6 +14,18 @@ public class ESParam {
 	// need sorted field
 	public Map<String, Boolean> sortKeys;
 	
+	public Map<String, Boolean> getSortKeys() {
+		return sortKeys;
+	}
+
+	public void setSortKeys(Map<String, Boolean> sortKeys) {
+		this.sortKeys = sortKeys;
+	}
+	
+	public void setSortKey(String key, Boolean asc) {
+		this.sortKeys.put(key, asc);
+	}
+
 	// displayed fields
 	public String[] searchedFields;
 	

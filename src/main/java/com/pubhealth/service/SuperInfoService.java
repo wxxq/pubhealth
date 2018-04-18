@@ -53,6 +53,10 @@ public class SuperInfoService {
 			param.fieldList.add(new TermField("uid", superInfo.getUid(), ESSearchType.FILTER));
 		}
 		
+		if(StringUtils.isNotEmpty(superInfo.getSort())) {
+			param.setSortKeys(superInfo.getSortKeys());
+		}
+		
 		if(superInfo.getFirstIndex()>0){
 			param.setFrom(superInfo.getFirstIndex());
 		}

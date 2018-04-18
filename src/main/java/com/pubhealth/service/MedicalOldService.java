@@ -45,6 +45,10 @@ public class MedicalOldService {
 //		if(StringUtils.isNotEmpty(medicalOld.getPhone())){
 //			param.fieldList.add(new TermField("contacts_phone.keyword", medicalOld.getPhone(),ESSearchType.FILTER));
 //		}
+		
+		if(StringUtils.isNotEmpty(medicalOld.getSort())) {
+			param.setSortKeys(medicalOld.getSortKeys());
+		}
 		if(medicalOld.getFirstIndex()>0){
 			param.setFrom(medicalOld.getFirstIndex());
 		}

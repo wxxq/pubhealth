@@ -44,6 +44,10 @@ public class ChildOneService {
 			param.fieldList.add(new TermField("unique_number.keyword", childOne.getUniqueNumber(),ESSearchType.FILTER));
 		}
 		
+		if(StringUtils.isNotEmpty(childOne.getSort())) {
+			param.setSortKeys(childOne.getSortKeys());
+		}
+		
 //		if(StringUtils.isNotEmpty(childOne.getPhone())){
 //			param.fieldList.add(new TermField("contacts_phone.keyword", childOne.getPhone(),ESSearchType.FILTER));
 //		}

@@ -45,6 +45,9 @@ public class VaccRecordService {
 			param.fieldList.add(new TermField("born_id.keyword", vccRecord.getBornId(), ESSearchType.FILTER));
 		}
 		
+		if(StringUtils.isNotEmpty(vccRecord.getSort())) {
+			param.setSortKeys(vccRecord.getSortKeys());
+		}
 //		if(StringUtils.isNotEmpty(psychoFile.getPhone())){
 //			param.fieldList.add(new TermField("contacts_phone.keyword", psychoFile.getPhone(),ESSearchType.FILTER));
 //		}

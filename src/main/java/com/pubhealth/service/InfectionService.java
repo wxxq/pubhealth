@@ -54,6 +54,10 @@ public class InfectionService {
 			param.fieldList.add(new TermField("uid", infectionDoc.getUid(), ESSearchType.FILTER));
 		}
 		
+		if(StringUtils.isNotEmpty(infectionDoc.getSort())) {
+			param.setSortKeys(infectionDoc.getSortKeys());
+		}
+		
 		if(infectionDoc.getFirstIndex()>0){
 			param.setFrom(infectionDoc.getFirstIndex());
 		}

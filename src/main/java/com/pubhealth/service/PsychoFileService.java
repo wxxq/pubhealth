@@ -45,6 +45,10 @@ public class PsychoFileService {
 //		if(StringUtils.isNotEmpty(psychoFile.getPhone())){
 //			param.fieldList.add(new TermField("contacts_phone.keyword", psychoFile.getPhone(),ESSearchType.FILTER));
 //		}
+		
+		if(StringUtils.isNotEmpty(psychoFile.getSort())) {
+			param.setSortKeys(psychoFile.getSortKeys());
+		}
 		if(psychoFile.getFirstIndex()>0){
 			param.setFrom(psychoFile.getFirstIndex());
 		}

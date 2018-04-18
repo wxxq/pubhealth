@@ -49,6 +49,10 @@ public class HealthEduService {
 			param.fieldList.add(new TermField("uid", healthEdu.getUid(), ESSearchType.FILTER));
 		}
 		
+		if(StringUtils.isNotEmpty(healthEdu.getSort())) {
+			param.setSortKeys(healthEdu.getSortKeys());
+		}
+		
 		if(healthEdu.getFirstIndex()>0){
 			param.setFrom(healthEdu.getFirstIndex());
 		}

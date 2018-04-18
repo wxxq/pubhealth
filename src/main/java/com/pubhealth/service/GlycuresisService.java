@@ -45,6 +45,9 @@ public class GlycuresisService  {
 		if(StringUtils.isNotEmpty(glycuresis.getUniqueNumber())){
 			param.fieldList.add(new TermField("unique_number.keyword", glycuresis.getUniqueNumber(),ESSearchType.FILTER));
 		}
+		if(StringUtils.isNotEmpty(glycuresis.getSort())) {
+			param.setSortKeys(glycuresis.getSortKeys());
+		}
 		
 		if(glycuresis.getFirstIndex()>0){
 			param.setFrom(glycuresis.getFirstIndex());

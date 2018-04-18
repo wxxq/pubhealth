@@ -45,6 +45,9 @@ public class ChildrenNewbornService {
 			param.fieldList.add(new TermField("unique_number.keyword", childrenNewborn.getUniqueNumber(),ESSearchType.FILTER));
 		}
 	
+		if(StringUtils.isNotEmpty(childrenNewborn.getSort())) {
+			param.setSortKeys(childrenNewborn.getSortKeys());
+		}
 		if(childrenNewborn.getFirstIndex()>0){
 			param.setFrom(childrenNewborn.getFirstIndex());
 		}

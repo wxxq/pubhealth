@@ -45,6 +45,10 @@ public class HypertensionService {
 			param.fieldList.add(new TermField("unique_number.keyword", hypertension.getUniqueNumber(),ESSearchType.FILTER));
 		}
 	
+		if(StringUtils.isNotEmpty(hypertension.getSort())) {
+			param.setSortKeys(hypertension.getSortKeys());
+		}
+		
 		if(hypertension.getFirstIndex()>0){
 			param.setFrom(hypertension.getFirstIndex());
 		}

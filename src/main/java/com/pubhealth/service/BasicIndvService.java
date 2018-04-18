@@ -45,6 +45,9 @@ public class BasicIndvService {
 		if(StringUtils.isNotEmpty(basicIndv.getUniqueNumber())){
 			param.fieldList.add(new TermField("unique_number.keyword", basicIndv.getUniqueNumber(),ESSearchType.FILTER));
 		}
+		if(StringUtils.isNotEmpty(basicIndv.getSort())) {
+			param.setSortKeys(basicIndv.getSortKeys());
+		}
 		if(basicIndv.getFirstIndex()>0){
 			param.setFrom(basicIndv.getFirstIndex());
 		}

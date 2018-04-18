@@ -1,5 +1,10 @@
 package com.pubhealth.entity;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.apache.commons.lang.StringUtils;
+
 public class Page {
 	/**
 	 * 默认页码
@@ -13,6 +18,30 @@ public class Page {
 	private int pageNo = DEFAULT_PAGE_NO; // 页码
 	private int pageSize = DEFAULT_PAGE_SIZE; // 页面大小
 	private int totalCount; // 总的记录数
+	
+	private String sort;
+	
+	
+	public String getSort() {
+		return sort;
+	}
+
+	public void setSort(String sort) {
+		this.sort = sort;
+	}
+	
+	public Map<String, Boolean> getSortKeys(){
+		Map<String, Boolean> sortKeys = new HashMap<String, Boolean>();
+		if(StringUtils.isNotEmpty(sort)) {
+			String[] keyValues = sort.split(";");
+			for(String item: keyValues) {
+				String[] kv = item.split(":");
+				sortKeys.put(kv[0], kv[1].equals("asc") ? true:false);
+			}
+		}
+		
+		return sortKeys;
+	}
 
 	public Page() {
 	}

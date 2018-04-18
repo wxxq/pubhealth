@@ -39,6 +39,9 @@ public class OldCareService {
 		if(StringUtils.isNotEmpty(oldCare.getUniqueNumber())){
 			param.fieldList.add(new TermField("unique_number.keyword", oldCare.getUniqueNumber(),ESSearchType.FILTER));
 		}
+		if(StringUtils.isNotEmpty(oldCare.getSort())) {
+			param.setSortKeys(oldCare.getSortKeys());
+		}
 // 表里面没有名字字段
 //		if(StringUtils.isNotEmpty(oldCare.getPersonalName())){
 //			param.fieldList.add(new TermField("collection_name.keyword", oldCare.getPersonalName(), ESSearchType.FILTER));

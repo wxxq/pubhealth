@@ -46,8 +46,11 @@ public class TuberculosisFirstService {
 		if(StringUtils.isNotEmpty(tuberculosisFirst.getUniqueNumber())){
 			param.fieldList.add(new TermField("unique_number.keyword", tuberculosisFirst.getUniqueNumber(),ESSearchType.FILTER));
 		}
-
 		
+		if(StringUtils.isNotEmpty(tuberculosisFirst.getSort())) {
+			param.setSortKeys(tuberculosisFirst.getSortKeys());
+		}
+
 		if(tuberculosisFirst.getFirstIndex()>0){
 			param.setFrom(tuberculosisFirst.getFirstIndex());
 		}
