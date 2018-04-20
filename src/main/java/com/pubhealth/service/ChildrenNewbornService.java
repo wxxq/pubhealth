@@ -39,7 +39,7 @@ public class ChildrenNewbornService {
 			param.fieldList.add(new TermField("id_card.keyword", childrenNewborn.getIdCard(),ESSearchType.FILTER));
 		}
 		if(StringUtils.isNotEmpty(childrenNewborn.getPersonalName())){
-			param.fieldList.add(new TermField("doctor_signature.keyword", childrenNewborn.getPersonalName(), ESSearchType.FILTER));
+			param.fieldList.add(new TermField("name.keyword", childrenNewborn.getPersonalName(), ESSearchType.FILTER));
 		}
 		if(StringUtils.isNotEmpty(childrenNewborn.getUniqueNumber())){
 			param.fieldList.add(new TermField("unique_number.keyword", childrenNewborn.getUniqueNumber(),ESSearchType.FILTER));
