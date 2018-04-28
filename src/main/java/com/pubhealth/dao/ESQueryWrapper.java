@@ -1,13 +1,16 @@
 package com.pubhealth.dao;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
+import org.elasticsearch.action.update.UpdateRequest;
+import org.elasticsearch.action.update.UpdateResponse;
 import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.common.xcontent.XContentType;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.MatchQueryBuilder;
 import org.elasticsearch.index.query.MultiMatchQueryBuilder;
@@ -45,6 +48,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.stereotype.Component;
 
+import com.pubhealth.entity.Document;
 import com.pubhealth.entity.Index;
 import com.pubhealth.entity.ES.BaseField;
 import com.pubhealth.entity.ES.BoolField;
@@ -63,11 +67,43 @@ import static java.lang.String.format;
 @Component("ESQueryWrapper")
 public class ESQueryWrapper {
 	
+	Logger log=Logger.getLogger(ESQueryWrapper.class);
+	
 	private final RestHighLevelClient client = ESConnector.getClient();
 
 	public ESQueryWrapper() {
 	}
 
+	public String updateDocument(Map<String,Object> map, Index index){
+        try {
+            UpdateRequest request = new UpdateRequest(index.getName(),
+            		index.getType(), (String) map.get("id"))
+                    .doc((Map)map.get("content"));
+            UpdateResponse response = client.update(request);
+            return response.getId();
+        } catch (Exception ex){
+            log.error("The exception was thrown in updateDocument method. {} ", ex);
+        }
+        return null;
+    }
+
+	public SearchResponse commonQuery(ESParam param, Index index) {
+		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+		// 设置排序字段
+		wrapperBuilder(searchSourceBuilder, param);
+		// 装载查询参数
+
+		List<BaseField> fieldList = param.getFieldList();
+
+		// 传入 查询参数
+		if (fieldList != null) {
+			searchSourceBuilder.query(wrapperBoolQuery(fieldList));
+		}
+		// 传入聚合条件
+		addAggregationQuery(searchSourceBuilder, param);
+		return search(searchSourceBuilder, index);
+	}
+	
 	public void wrapperBuilder(SearchSourceBuilder searchSourceBuilder, ESParam param) {
 		int from = param.getFrom();
 		int size = param.getSize();
@@ -87,23 +123,6 @@ public class ESQueryWrapper {
 		} else {
 			searchSourceBuilder.sort(SortBuilders.scoreSort());
 		}
-	}
-
-	public SearchResponse commonQuery(ESParam param, Index index) {
-		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
-		// 设置排序字段
-		wrapperBuilder(searchSourceBuilder, param);
-		// 装载查询参数
-
-		List<BaseField> fieldList = param.getFieldList();
-
-		// 传入 查询参数
-		if (fieldList != null) {
-			searchSourceBuilder.query(wrapperBoolQuery(fieldList));
-		}
-		// 传入聚合条件
-		addAggregationQuery(searchSourceBuilder, param);
-		return search(searchSourceBuilder, index);
 	}
 
 	public BoolQueryBuilder wrapperBoolQuery(List<BaseField> fieldList) {

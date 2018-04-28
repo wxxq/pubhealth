@@ -22,4 +22,14 @@ public class ESResponseParse {
 		obj.put("status", 1);
 		return obj.toString();
 	}
+	
+	public static String parseIdFromResponse(SearchResponse response){
+		String id=null;
+		SearchHits hits = response.getHits();
+		if(hits.totalHits > 0){
+			id=hits.getAt(0).getId();
+		}
+		return id;
+	}
+	
 }

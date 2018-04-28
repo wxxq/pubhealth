@@ -6,15 +6,12 @@ import java.util.Map;
 /*
  * @author melo
 */
-public interface MongoBase<T> {
+public interface BaseMongoDao {
 	// 添加
-	public void insert(T object, String collectionName);
-
-	// 根据条件查找
-	public T findOne(Map<String, Object> params, String collectionName);
+	public void insert(Object object, String collectionName);
 
 	// 查找所有
-	public List<T> findAll(Map<String, Object> params, String collectionName);
+	public List<Object> findAll(Map<String, Object> params, String collectionName);
 
 	// 修改
 	public void update(Map<String, Object> params, String collectionName);
@@ -24,4 +21,8 @@ public interface MongoBase<T> {
 
 	// 根据条件删除
 	public void remove(Map<String, Object> params, String collectionName);
+
+	public Object findOne(Map<String, Object> params, String collectionName, Class cls);
+
+	Object findByObjectId(String id, String collectionName, Class cls);
 }
