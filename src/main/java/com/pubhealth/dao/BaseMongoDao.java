@@ -24,5 +24,12 @@ public interface BaseMongoDao {
 
 	public Object findOne(Map<String, Object> params, String collectionName, Class cls);
 
-	Object findByObjectId(String id, String collectionName, Class cls);
+	/**
+	 * 根据mongoID查询数据
+	 * @param id
+	 * @param collectionName
+	 * @param cls 返回类型的格式eg.String/Map等
+	 * @return
+	 */
+	public Object findByObjectId(String id, String collectionName, Class cls);
 }

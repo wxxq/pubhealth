@@ -14,7 +14,7 @@ public class ESResponseParse {
 		obj.put("count", totalSize);
 		JSONArray arr = new JSONArray();
 		for (SearchHit hit : hits) {
-			String resultStr=hit.getSourceAsString();
+			String resultStr = hit.getSourceAsString();
 			JSONObject item = new JSONObject(resultStr);
 			arr.put(item);
 		}
@@ -22,14 +22,15 @@ public class ESResponseParse {
 		obj.put("status", 1);
 		return obj.toString();
 	}
-	
-	public static String parseIdFromResponse(SearchResponse response){
-		String id=null;
+
+	public static String parseIdFromResponse(SearchResponse response) {
+		String id = null;
 		SearchHits hits = response.getHits();
-		if(hits.totalHits > 0){
-			id=hits.getAt(0).getId();
+		int length = (int) hits.totalHits;
+		if (hits.totalHits > 0) {
+			id = hits.getAt(length - 1).getId();
 		}
 		return id;
 	}
-	
+
 }
